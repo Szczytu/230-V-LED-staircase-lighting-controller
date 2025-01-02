@@ -18,11 +18,19 @@ void setup() {
   pinMode(6, INPUT); // czujnik klatka dół
   pinMode(7, INPUT); // czujnik taras
   pinMode(8, INPUT); // czujnik dodatkowy drzwi wejściowe
+  pinMode(5, LOW); // czujnik klatka góra
+  pinMode(6, LOW); // czujnik klatka dół
+  pinMode(7, LOW); // czujnik taras
+  pinMode(8, LOW);
   // Rejestr przesuwny
   pinMode(dataPin, OUTPUT);
   pinMode(clockPin, OUTPUT);
   pinMode(latchPin, OUTPUT);
-
+  // Diody sygnalizujące czy LEDy się zaświecą
+  pinMode(11, OUTPUT); // czerwony LED
+  pinMode(12, OUTPUT); // zielony LED
+  digitalWrite(11, LOW);
+  digitalWrite(12, LOW);
   // Zgaszenie wszystkich diod
   clearAllLeds();
 }
@@ -33,10 +41,20 @@ void loop() {
   Serial.print("Poziom ciemnosci:");
   Serial.println(photoresistor);
   potenciometr = analogRead(A1);
-  int sensitivity = map(potenciometr, 0, 1023, 0, 100); 
+  //Serial.println(potenciometr);
+  //delay(300);
+  
+  int sensitivity = map(potenciometr, 0, 1023, 0, 100); //1023
   Serial.print("ustawiony poziom czułości na światło:");
   Serial.println(sensitivity);
   if (photoresistor  < sensitivity) {
+  // Zasygnalizuj odpowiednie ustawienie czułości na poziom światła sterownika
+  digitalWrite(11, LOW);
+  digitalWrite(12, HIGH);
+  Serial.print("Czerwony LED ");
+  Serial.println(digitalRead(11));
+  Serial.print("Zielony LED ");
+  Serial.println(digitalRead(12));
   // Sprawdź, który czujnik wykrył ruch
   bool upperTriggered = digitalRead(5) == HIGH;
   bool lowerTriggered = digitalRead(6) == HIGH;
@@ -102,6 +120,12 @@ if (millis() - lastMovementTime > timeout) {
 }
   } else{
     Serial.println("Jasno na klatce");
+    digitalWrite(11, HIGH); //czerwone
+    digitalWrite(12, LOW); //zielone
+    Serial.print("czerwony LED ");
+    Serial.println(digitalRead(11)); //czerwone
+    Serial.print("Zielony LED ");
+    Serial.println(digitalRead(12), "zielone"); //zielone
   }
   
 }
@@ -157,7 +181,6 @@ void TriggerON_Terrace() {
 void TriggerON_entrance_door() {
   for (int i = 25; i >= 18; i--) {
     setLed(i, HIGH);
-    delay(500);
   }
 }
 
