@@ -7,12 +7,13 @@ The project schematic, sample 3D model and gerber file is in the folder "PCB_LED
 <p align="center">
   <img src="https://github.com/user-attachments/assets/4150136f-d2c2-4d96-87db-decae745a525">
 </p>
+![CONTROLLER_LED_STAIRS_230V](https://github.com/user-attachments/assets/d2a1ea18-531a-4efb-bf9d-450dfcc717a9)
 
 ## 3D model
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b4b12e4f-7675-4856-ba78-23da385636dc">
+  <img src="https://github.com/user-attachments/assets/d2a1ea18-531a-4efb-bf9d-450dfcc717a9">
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/d73068bc-9361-452f-b971-7c70c2ba2495">
+  <img src="https://github.com/user-attachments/assets/e8d78b4d-09ef-4ffb-ac50-9e90cfc52420">
 </p>
