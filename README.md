@@ -7,6 +7,7 @@ The project schematic, sample 3D model and gerber file is in the folder "PCB_LED
 <p align="center">
   <img src="https://github.com/user-attachments/assets/4150136f-d2c2-4d96-87db-decae745a525">
 </p>
+
 ## 3D model
 <p align="center">
   <img src="https://github.com/user-attachments/assets/b4b12e4f-7675-4856-ba78-23da385636dc">
