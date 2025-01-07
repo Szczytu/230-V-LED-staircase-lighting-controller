@@ -3,7 +3,5 @@ Controller for a large staircase consisting of 3 parts, total 26 stairs on 230 V
 # Schematic and project controller of 230V LED
 The project schematic, sample 3D model and gerber file is in the folder "PCB_LED_STAIRS"
 <p align="center">
-  ![CONTROLLER_LED_STAIRS_230V-transparent](https://github.com/user-attachments/assets/b4b12e4f-7675-4856-ba78-23da385636dc)
-
   <img src="https://github.com/user-attachments/assets/b4b12e4f-7675-4856-ba78-23da385636dc">
 </p>
