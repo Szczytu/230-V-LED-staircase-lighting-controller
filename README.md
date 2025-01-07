@@ -5,5 +5,5 @@ The project schematic, sample 3D model and gerber file is in the folder "PCB_LED
 <p align="center">
   ![CONTROLLER_LED_STAIRS_230V-transparent](https://github.com/user-attachments/assets/b4b12e4f-7675-4856-ba78-23da385636dc)
 
-  <img src="">
+  <img src="![CONTROLLER_LED_STAIRS_230V-transparent]">
 </p>
