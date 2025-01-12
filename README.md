@@ -11,7 +11,7 @@ The project was made in KiCad 8.0.
 
 ## Simplified schematic
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ee3dbdfc-6cc0-4438-bc94-00d3c4641db5">
+  <img src="https://github.com/user-attachments/assets/f8bdff5c-1816-40cd-b986-1e4a3083f6c1">
 </p>
 > [!IMPORTANT]
 > 1 leg of the BT136 triac is connected to the PHASE of the LED strip. The 2nd leg of the BT136 triac is connected to the PHASE of the AC mains. The 3rd leg of the BT136 triac is connected to the gate of the power3061 controller.
