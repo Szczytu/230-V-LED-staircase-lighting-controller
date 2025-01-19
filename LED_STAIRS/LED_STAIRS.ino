@@ -7,128 +7,10 @@ int potenciometr = A1;
 byte leds[4] = {0};
 
 unsigned long lastMovementTime = 0;  // Ostatni czas wykrycia ruchu
-const unsigned long timeout = 2000; // 30 sekund
+const unsigned long timeout = 30000; // 30 sekund
 bool isExecuting = false;            // Czy sekwencja jest w trakcie
 int activeSequence = -1;             // -1 = brak, 0 = góra, 1 = dół, 2 = taras, 3 = drzwi wejściowe
 
-void setup() {
-  Serial.begin(115200);
-  // Czujniki ruchu
-  pinMode(5, INPUT); // czujnik klatka góra
-  pinMode(6, INPUT); // czujnik klatka dół
-  pinMode(7, INPUT); // czujnik taras
-  pinMode(8, INPUT); // czujnik dodatkowy drzwi wejściowe
-  pinMode(5, LOW); // czujnik klatka góra
-  pinMode(6, LOW); // czujnik klatka dół
-  pinMode(7, LOW); // czujnik taras
-  pinMode(8, LOW);
-  // Rejestr przesuwny
-  pinMode(dataPin, OUTPUT);
-  pinMode(clockPin, OUTPUT);
-  pinMode(latchPin, OUTPUT);
-  // Diody sygnalizujące czy LEDy się zaświecą
-  pinMode(11, OUTPUT); // czerwony LED
-  pinMode(12, OUTPUT); // zielony LED
-  digitalWrite(11, LOW);
-  digitalWrite(12, LOW);
-  // Zgaszenie wszystkich diod
-  clearAllLeds();
-}
-
-void loop() {
-  photoresistor = analogRead(A0);
-  photoresistor = map(photoresistor, 0 , 1023, 0 , 100);
-  Serial.print("Poziom ciemnosci:");
-  Serial.println(photoresistor);
-  potenciometr = analogRead(A1);
-  //Serial.println(potenciometr);
-  //delay(300);
-  
-  int sensitivity = map(potenciometr, 0, 1023, 0, 100); //1023
-  Serial.print("ustawiony poziom czułości na światło:");
-  Serial.println(sensitivity);
-  if (photoresistor  < sensitivity) {
-  // Zasygnalizuj odpowiednie ustawienie czułości na poziom światła sterownika
-  digitalWrite(11, LOW);
-  digitalWrite(12, HIGH);
-  Serial.print("Czerwony LED ");
-  Serial.println(digitalRead(11));
-  Serial.print("Zielony LED ");
-  Serial.println(digitalRead(12));
-  // Sprawdź, który czujnik wykrył ruch
-  bool upperTriggered = digitalRead(5) == HIGH;
-  bool lowerTriggered = digitalRead(6) == HIGH;
-  bool terraceTriggered = digitalRead(7) == HIGH;
-  bool entrance_doorTriggered = digitalRead(8) == HIGH;
-  if (!isExecuting) {
-    // Zidentyfikuj pierwszy ruch i rozpocznij odpowiednią sekwencję
-    if (upperTriggered) {
-      Serial.println("Ruch na górze");
-      isExecuting = true;
-      activeSequence = 0;
-      lastMovementTime = millis();  // Aktualizuj czas ostatniego ruchu
-      TriggerON_Upper_staircase();
-      isExecuting = false;
-    } else if (lowerTriggered) {
-      Serial.println("Ruch na dole");
-      isExecuting = true;
-      activeSequence = 1;
-      lastMovementTime = millis();  // Aktualizuj czas ostatniego ruchu
-      TriggerON_Lower_staircase();
-      isExecuting = false;
-    } else if (terraceTriggered) {
-      Serial.println("Ruch na schodach na tarasie");
-      isExecuting = true;
-      activeSequence = 2;
-      lastMovementTime = millis();  // Aktualizuj czas ostatniego ruchu
-      TriggerON_Terrace();
-      isExecuting = false;
-    } else if (entrance_doorTriggered) {
-      Serial.println("Ruch na drzwiach wejściowych");
-      isExecuting = true;
-      activeSequence = 3;
-      lastMovementTime = millis();  // Aktualizuj czas ostatniego ruchu
-      TriggerON_entrance_door();
-      isExecuting = false;
-    }
-
-  }
-
-  // Po zakończeniu sekwencji monitoruj czujniki
-  // Po zakończeniu sekwencji monitoruj czujniki
-  if (activeSequence != -1) {
-    if (upperTriggered || lowerTriggered || terraceTriggered || entrance_doorTriggered) {
-       lastMovementTime = millis(); // Aktualizacja czasu przy każdym ruchu
-       Serial.println("Ruch wykryty - resetowanie odliczania czasu.");
-  }
-
-  // Oblicz czas pozostały do zgaszenia LED
-  double elapsedTime = millis() - lastMovementTime;
-  if (elapsedTime < timeout) {
-    double remainingTime = timeout - elapsedTime;
-    Serial.print("Pozostały czas do zgaśnięcia LED: ");
-    Serial.print(remainingTime / 1000); // Wyświetl w sekundach
-    Serial.println(" s");
-  }
-}
-
-// Jeśli brak ruchu przez określony czas, zgaś wszystkie diody
-if (millis() - lastMovementTime > timeout) {
-  Serial.println("Brak ruchu - gaszę wszystkie diody.");
-  clearAllLeds();
-  activeSequence = -1; // Reset aktywnej sekwencji
-}
-  } else{
-    Serial.println("Jasno na klatce");
-    digitalWrite(11, HIGH); //czerwone
-    digitalWrite(12, LOW); //zielone
-    Serial.print("czerwony LED ");
-    Serial.println(digitalRead(11)); //czerwone
-    Serial.print("Zielony LED ");
-    Serial.println(digitalRead(12), "zielone"); //zielone
-  }
-  
-}
 
 // Funkcja zapalania diod dla górnej klatki
 void TriggerON_Upper_staircase() {
@@ -206,4 +88,141 @@ void clearAllLeds() {
     leds[i] = 0;
   }
   updateShiftRegisters();
+}
+
+
+
+
+//******************SETUP******************
+
+void setup() {
+  Serial.begin(115200);
+  // Czujniki ruchu
+  pinMode(5, INPUT); // czujnik klatka góra
+  pinMode(6, INPUT); // czujnik klatka dół
+  pinMode(7, INPUT); // czujnik taras
+  pinMode(8, INPUT); // czujnik dodatkowy drzwi wejściowe
+  pinMode(5, LOW); // czujnik klatka góra
+  pinMode(6, LOW); // czujnik klatka dół
+  pinMode(7, LOW); // czujnik taras
+  pinMode(8, LOW);
+  // Rejestr przesuwny
+  pinMode(dataPin, OUTPUT);
+  pinMode(clockPin, OUTPUT);
+  pinMode(latchPin, OUTPUT);
+  // Diody sygnalizujące czy LEDy się zaświecą
+  pinMode(11, OUTPUT); // czerwony LED
+  pinMode(12, OUTPUT); // zielony LED
+  digitalWrite(11, LOW);
+  digitalWrite(12, LOW);
+  // Zgaszenie wszystkich diod
+  clearAllLeds();
+}
+
+
+
+
+//******************MAIN PROGRAM******************
+
+void loop() {
+  photoresistor = analogRead(A0);
+  photoresistor = map(photoresistor, 0 , 1023, 0 , 100);
+  Serial.print("Poziom ciemnosci:");
+  Serial.println(photoresistor);
+  potenciometr = analogRead(A1);
+  //Serial.println(potenciometr);
+  //delay(300);
+  
+  int sensitivity = map(potenciometr, 0, 1023, 0, 100); //1023
+  Serial.print("ustawiony poziom czułości na światło:");
+  Serial.println(sensitivity);
+  if (photoresistor  < sensitivity) {
+    // Zasygnalizuj odpowiednie ustawienie czułości na poziom światła sterownika
+    digitalWrite(11, LOW);
+    digitalWrite(12, HIGH);
+    Serial.print("Czerwony LED ");
+    Serial.println(digitalRead(11));
+    Serial.print("Zielony LED ");
+    Serial.println(digitalRead(12));
+    // Sprawdź, który czujnik wykrył ruch
+    bool upperTriggered = digitalRead(5) == HIGH;
+    bool lowerTriggered = digitalRead(6) == HIGH;
+    bool terraceTriggered = digitalRead(7) == HIGH;
+    bool entrance_doorTriggered = digitalRead(8) == HIGH;
+
+    if (!isExecuting) {
+      // Zidentyfikuj pierwszy ruch i rozpocznij odpowiednią sekwencję
+      if (upperTriggered) {
+        Serial.println("Ruch na górze");
+        isExecuting = true;
+        activeSequence = 0;
+        lastMovementTime = millis();  // Aktualizuj czas ostatniego ruchu
+        TriggerON_Upper_staircase();
+        isExecuting = false;
+      } 
+      else if (lowerTriggered) {
+        Serial.println("Ruch na dole");
+        isExecuting = true;
+        activeSequence = 1;
+        lastMovementTime = millis();  // Aktualizuj czas ostatniego ruchu
+        TriggerON_Lower_staircase();
+        isExecuting = false;
+      } 
+      else if (terraceTriggered) {
+        Serial.println("Ruch na schodach na tarasie");
+        isExecuting = true;
+        activeSequence = 2;
+        lastMovementTime = millis();  // Aktualizuj czas ostatniego ruchu
+        TriggerON_Terrace();
+        isExecuting = false;
+      } 
+      else if (entrance_doorTriggered) {
+        Serial.println("Ruch na drzwiach wejściowych");
+        isExecuting = true;
+        activeSequence = 3;
+        lastMovementTime = millis();  // Aktualizuj czas ostatniego ruchu
+        TriggerON_entrance_door();
+        isExecuting = false;
+     }
+    
+    }
+  
+
+    // Po zakończeniu sekwencji monitoruj czujniki
+    if (activeSequence != -1) {
+      if (upperTriggered || lowerTriggered || terraceTriggered || entrance_doorTriggered) {
+         lastMovementTime = millis(); // Aktualizacja czasu przy każdym ruchu
+         Serial.println("Ruch wykryty - resetowanie odliczania czasu.");
+      }
+
+    // Oblicz czas pozostały do zgaszenia LED
+    double elapsedTime = millis() - lastMovementTime;
+    if (elapsedTime < timeout) {
+      double remainingTime = timeout - elapsedTime;
+      Serial.print("Pozostały czas do zgaśnięcia LED: ");
+      Serial.print(remainingTime / 1000); // Wyświetl w sekundach
+      Serial.println(" s");
+      }
+    }
+
+    // Jeśli brak ruchu przez określony czas, zgaś wszystkie diody
+    if (millis() - lastMovementTime > timeout) {
+      Serial.println("Brak ruchu - gaszę wszystkie diody.");
+      clearAllLeds();
+      activeSequence = -1; // Reset aktywnej sekwencji
+      }
+
+  }
+  else{
+    Serial.println("Jasno na klatce");
+    digitalWrite(11, HIGH); //czerwone
+    digitalWrite(12, LOW); //zielone
+    Serial.print("czerwony LED ");
+    Serial.println(digitalRead(11)); //czerwone
+    Serial.print("Zielony LED ");
+    Serial.println(digitalRead(12), "zielone"); //zielone
+    clearAllLeds();
+    activeSequence = -1; // Reset aktywnej sekwencji
+  }
+
 }
