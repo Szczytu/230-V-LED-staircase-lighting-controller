@@ -11,7 +11,7 @@ The project was made in KiCad 8.0.
 
 ## Simplified schematic
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/f8bdff5c-1816-40cd-b986-1e4a3083f6c1">
+  <img src="https://github.com/user-attachments/assets/180a22a6-4891-4025-8321-ed03dce79e88">
 </p>
 
 > [!IMPORTANT]
