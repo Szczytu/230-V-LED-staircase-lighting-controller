@@ -6,7 +6,7 @@ The project schematic, sample 3D model and gerber file is in the folder "PCB_LED
 The project was made in KiCad 8.0.
 ## Schematic
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/4150136f-d2c2-4d96-87db-decae745a525">
+  <img src="https://github.com/user-attachments/assets/b3d995f3-3b78-4d07-9395-5294634fcef2">
 </p>
 
 ## Simplified schematic
