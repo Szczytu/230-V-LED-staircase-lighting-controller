@@ -29,7 +29,7 @@ The project was made in KiCad 8.0.
 ## Final efect of the controller
 A universal Kradex Z112A plastic housing with dimensions of 186x136x40mm was used to enclose the PCB
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/991df6b9-d29d-41c6-be19-cae3f0de9689">
-  <img src="https://github.com/user-attachments/assets/856a504b-72a2-47f8-a37a-7c82b0aec2d1">
   <img src="https://github.com/user-attachments/assets/5484ea67-715c-437e-9b45-e33c243d6e71">
-</p>!
+  <img src="https://github.com/user-attachments/assets/856a504b-72a2-47f8-a37a-7c82b0aec2d1">
+  <img src="https://github.com/user-attachments/assets/991df6b9-d29d-41c6-be19-cae3f0de9689">
+</p>
