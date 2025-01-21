@@ -25,3 +25,10 @@ The project was made in KiCad 8.0.
   <img src="https://github.com/user-attachments/assets/d2a1ea18-531a-4efb-bf9d-450dfcc717a9">
   <img src="https://github.com/user-attachments/assets/e8d78b4d-09ef-4ffb-ac50-9e90cfc52420">
 </p>
+
+## Final efect of the controller
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/991df6b9-d29d-41c6-be19-cae3f0de9689">
+  <img src="https://github.com/user-attachments/assets/856a504b-72a2-47f8-a37a-7c82b0aec2d1">
+  <img src="https://github.com/user-attachments/assets/5484ea67-715c-437e-9b45-e33c243d6e71">
+</p>!
